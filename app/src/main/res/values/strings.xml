@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">OVBHA</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="google_maps_api_key">@string/MAPS_API_KEY</string>
+</resources>
