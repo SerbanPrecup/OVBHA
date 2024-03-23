@@ -9,6 +9,9 @@
         android:name="com.example.ovbha.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_check_fragment"
+            app:destination="@id/check_fragment" />
     </fragment>
 
     <fragment
@@ -16,5 +19,11 @@
         android:name="com.example.ovbha.MapsFragment"
         android:label="Maps"
         tools:layout="@layout/fragment_maps" />
+
+    <fragment
+        android:id="@+id/check_fragment"
+        android:name="com.example.ovbha.CheckListFragment"
+        android:label="Emergency Supplies Checklist"
+        tools:layout="@layout/fragment_check_list" />
 
 </navigation>

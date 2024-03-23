@@ -5,10 +5,16 @@
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/title_home" />
+
     <item
         android:id="@+id/map_fragment"
         android:icon="@drawable/maps"
         android:title="Maps" />
+
+    <item
+        android:id="@+id/check_fragment"
+        android:icon="@drawable/maps"
+        android:title="Checklist" />
 
 
 </menu>

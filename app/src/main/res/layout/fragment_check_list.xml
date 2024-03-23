@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CheckListFragment">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <CheckBox
+        android:id="@+id/cFirstAidKit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="First Aid Kit"
+        android:layout_centerHorizontal="true" />
+
+    <CheckBox
+        android:id="@+id/cWater"
+        android:layout_below="@id/cFirstAidKit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Water"
+        android:layout_centerHorizontal="true" />
+
+    <CheckBox
+        android:id="@+id/cNonPerishableFood"
+        android:layout_below="@+id/cWater"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Non-perishable Food"
+        android:layout_centerHorizontal="true" />
+
+    <CheckBox
+        android:id="@+id/cManualCanOpener"
+        android:layout_below="@+id/cNonPerishableFood"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Manual Can Opener"
+        android:layout_centerHorizontal="true" />
+
+    <CheckBox
+        android:id="@+id/cFlashlights"
+        android:layout_below="@+id/cManualCanOpener"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Flashlights"
+        android:layout_centerHorizontal="true" />
+
+    <CheckBox
+        android:id="@+id/cMultiTool"
+        android:layout_below="@+id/cFlashlights"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Multi-tool or Knife"
+        android:layout_centerHorizontal="true" />
+
+    <CheckBox
+        android:id="@+id/cWhistle"
+        android:layout_below="@+id/cMultiTool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Whistle"
+        android:layout_centerHorizontal="true" />
+
+    <CheckBox
+        android:id="@+id/cEmergencyBlankets"
+        android:layout_below="@+id/cWhistle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Emergency Blankets"
+        android:layout_centerHorizontal="true" />
+
+    <CheckBox
+        android:id="@+id/cPortablePhoneCharger"
+        android:layout_below="@+id/cEmergencyBlankets"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Portable Phone Charger"
+        android:layout_centerHorizontal="true" />
+
+    <CheckBox
+        android:id="@+id/cLocalMaps"
+        android:layout_below="@+id/cPortablePhoneCharger"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Local Maps"
+        android:layout_centerHorizontal="true" />
+
+    <CheckBox
+        android:id="@+id/cEmergencyCash"
+        android:layout_below="@+id/cLocalMaps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Emergency Cash"
+        android:layout_centerHorizontal="true" />
+
+    <CheckBox
+        android:id="@+id/cPersonalHygieneItems"
+        android:layout_below="@+id/cEmergencyCash"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Personal Hygiene Items"
+        android:layout_centerHorizontal="true" />
+
+    <CheckBox
+        android:id="@+id/cClothing"
+        android:layout_below="@+id/cPersonalHygieneItems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Clothing"
+        android:layout_centerHorizontal="true" />
+
+    <CheckBox
+        android:id="@+id/cMatchesOrLighter"
+        android:layout_below="@+id/cClothing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Matches or Lighter"
+        android:layout_centerHorizontal="true" />
+
+    <CheckBox
+        android:id="@+id/cDuctTapeAndPlasticSheeting"
+        android:layout_below="@+id/cMatchesOrLighter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Duct Tape and Plastic Sheeting"
+        android:layout_centerHorizontal="true" />
+
+    <CheckBox
+        android:id="@+id/cImportantDocuments"
+        android:layout_below="@+id/cDuctTapeAndPlasticSheeting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Important Documents"
+        android:layout_centerHorizontal="true" />
+
+    <CheckBox
+        android:id="@+id/cMedication"
+        android:layout_below="@+id/cImportantDocuments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Medication"
+        android:layout_centerHorizontal="true" />
+
+    <CheckBox
+        android:id="@+id/cPetSupplies"
+        android:layout_below="@+id/cMedication"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pet Supplies"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
+</ScrollView>

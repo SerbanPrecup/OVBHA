@@ -42,7 +42,7 @@ public class MapsFragment extends Fragment {
         public void onMapReady(GoogleMap googleMap) {
             LatLng userLocation = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
             googleMap.addMarker(new MarkerOptions().position(userLocation).title("Your Location"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation,15f));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15f));
         }
     };
 
@@ -59,28 +59,27 @@ public class MapsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity());
         getLastLocation();
-        if(getActivity()!=null){
+        if (getActivity() != null) {
             androidx.appcompat.app.ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
-            if(actionBar != null){
+            if (actionBar != null) {
                 actionBar.hide();
             }
         }
     }
 
     ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(
-            new ActivityResultContracts.RequestPermission(), isGranted ->{
-                if(isGranted){
+            new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
                     getLastLocation();
-                }
-                else{
+                } else {
                     Toast.makeText(requireContext(), "Location permission is denied.", Toast.LENGTH_SHORT).show();
                 }
             }
     );
 
-    private void getLastLocation(){
-        if(ActivityCompat.checkSelfPermission(requireContext(),Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(requireContext(),Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+    private void getLastLocation() {
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
             return;
         }
@@ -88,11 +87,11 @@ public class MapsFragment extends Fragment {
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
-                if(location != null){
-                    currentLocation=location;
-                    SupportMapFragment mapFragment=
+                if (location != null) {
+                    currentLocation = location;
+                    SupportMapFragment mapFragment =
                             (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map_fragment);
-                    if(mapFragment != null){
+                    if (mapFragment != null) {
                         mapFragment.getMapAsync(callback);
                     }
                 }
