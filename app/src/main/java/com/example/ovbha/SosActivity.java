@@ -9,6 +9,8 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,6 +27,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 public class SosActivity extends AppCompatActivity {
 
     private static final int MY_PERMISSIONS_REQUEST_LOCATION = 123;
@@ -37,6 +43,7 @@ public class SosActivity extends AppCompatActivity {
     double latitude;
     double longitude;
     String textLoc;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,6 +142,39 @@ public class SosActivity extends AppCompatActivity {
         }
     }
 
+    private String getLocationAddress(Location location) {
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(
+                    location.getLatitude(),
+                    location.getLongitude(),
+                    1); // Get only one address
+
+            if (addresses != null && addresses.size() > 0) {
+                Address address = addresses.get(0);
+                // Format the address to display
+                String addressText = String.format(
+                        "%s, %s, %s, %s, %s",
+                        address.getFeatureName(),
+                        address.getThoroughfare(),
+                        address.getLocality(),
+                        address.getAdminArea(),
+                        address.getCountryName());
+
+                return addressText;
+                // Use the addressText as needed
+            } else {
+                Toast.makeText(this, "No address found for the location", Toast.LENGTH_SHORT).show();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Geocoder exception: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+        }
+        return "Adr.";
+    }
+
+
     private void getLastLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -152,7 +192,7 @@ public class SosActivity extends AppCompatActivity {
                     currentLocation = location;
                     latitude = currentLocation.getLatitude();
                     longitude = currentLocation.getLongitude();
-                    textLoc = "Latitudine: " + latitude + "\nLongitudine: " + longitude;
+                    textLoc = "Latitudine: " + latitude + "\nLongitudine: " + longitude + "\nAdresa: " + getLocationAddress(currentLocation);
                     txtCo.setText(textLoc);
                 }
             }

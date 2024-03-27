@@ -1,32 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SHARE LOCATION!"
-        android:layout_centerInParent="true"
-        android:id="@+id/btnShareLocation"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.home.HomeFragment">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Emergency Supplies Checklist "
-        android:layout_below="@+id/btnShareLocation"
-        android:id="@+id/btnCheckList"
-        android:layout_centerHorizontal="true"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:src="@drawable/romania_map"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/imgMaps"
+            android:layout_margin="0dp"/>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Weather"
-        android:layout_below="@+id/btnCheckList"
-        android:id="@+id/btnWeather"
-        android:layout_centerHorizontal="true"/>
 
-</RelativeLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:src="@drawable/weather"
+            android:layout_below="@+id/imgMaps"
+            android:id="@+id/imgWeather"
+            android:layout_margin="0dp"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:src="@drawable/checklist"
+            android:layout_below="@+id/imgWeather"
+            android:id="@+id/imgCheckList"
+            android:layout_margin="0dp"/>
+
+        
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:id="@+id/imgHotel"
+            android:layout_below="@+id/imgCheckList"
+            android:src="@drawable/hotel"
+            android:layout_margin="0dp"/>
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:id="@+id/imgService"
+            android:layout_below="@+id/imgRestaurant"
+            android:src="@drawable/service"
+            android:layout_marginBottom="30dp"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:id="@+id/imgRestaurant"
+            android:layout_below="@+id/imgHotel"
+            android:src="@drawable/restaurant"
+            android:layout_margin="0dp"/>
+
+
+    </RelativeLayout>
+</ScrollView>

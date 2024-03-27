@@ -36,6 +36,7 @@ android {
 }
 
 dependencies {
+    implementation("com.google.android.libraries.places:places:3.3.0")
     implementation("androidx.annotation:annotation:1.3.0")
     implementation("com.squareup.picasso:picasso:2.71828")
     implementation("com.android.volley:volley:1.2.1")

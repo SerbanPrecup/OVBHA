@@ -1,5 +1,6 @@
 package com.example.ovbha;
 
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -11,6 +12,8 @@ import androidx.fragment.app.Fragment;
 import android.Manifest;
 import android.app.ActionBar;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,8 +32,24 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
-public class MapsFragment extends Fragment {
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.api.model.PlaceLikelihood;
+
+public class MapsFragment extends Fragment {
+    private GoogleMap googleMap;
+    private ArrayList<Marker> hotelMarkers = new ArrayList<>();
     private final int FINE_PERMISSION_CODE = 1;
     Location currentLocation;
 
@@ -40,9 +59,11 @@ public class MapsFragment extends Fragment {
 
         @Override
         public void onMapReady(GoogleMap googleMap) {
+//            MapsFragment.this.googleMap = googleMap;
             LatLng userLocation = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
             googleMap.addMarker(new MarkerOptions().position(userLocation).title("Your Location"));
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15f));
+//            searchHotels();
         }
     };
 
@@ -51,7 +72,14 @@ public class MapsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_maps, container, false);
+        View view = inflater.inflate(R.layout.fragment_maps, container, false);
+
+        // Inițializează serviciul Places API
+        if (!Places.isInitialized()) {
+            Places.initialize(requireContext(), "AIzaSyBQTY0sOKHIZ8yYjy2eTij64uSwq8SaVhs");
+        }
+
+        return view;
     }
 
     @Override
@@ -77,6 +105,39 @@ public class MapsFragment extends Fragment {
             }
     );
 
+    private void searchHotels() {
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // Dacă permisiunea pentru localizare nu este acordată, nu puteți căuta hoteluri. Poate ar trebui să solicitați permisiunea aici.
+            return;
+        }
+
+        // Înlocuiți latitudinea și longitudinea cu coordonatele actuale sau coordonatele dorite ale centrului zonei de căutare.
+        LatLng searchLocation = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+
+        // Definiți cererea de căutare a hotelurilor folosind Google Places API.
+        PlacesClient placesClient = Places.createClient(requireContext());
+        List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
+        FindCurrentPlaceRequest request = FindCurrentPlaceRequest.newInstance(placeFields);
+
+        // Trimiteți cererea de căutare a locurilor și tratați rezultatele.
+        placesClient.findCurrentPlace(request).addOnSuccessListener((response) -> {
+            for (PlaceLikelihood placeLikelihood : response.getPlaceLikelihoods()) {
+                if (placeLikelihood.getPlace().getTypes().contains(Place.Type.LODGING)) {
+                    LatLng hotelLatLng = placeLikelihood.getPlace().getLatLng();
+                    if (hotelLatLng != null) {
+                        Marker marker = googleMap.addMarker(new MarkerOptions()
+                                .position(hotelLatLng)
+                                .title(placeLikelihood.getPlace().getName()));
+                        hotelMarkers.add(marker);
+                    }
+                }
+            }
+        }).addOnFailureListener((exception) -> {
+            // Tratați cazul în care căutarea hotelurilor a eșuat.
+            Toast.makeText(requireContext(), "Failed to search for hotels.", Toast.LENGTH_SHORT).show();
+        });
+    }
+
     private void getLastLocation() {
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -98,4 +159,5 @@ public class MapsFragment extends Fragment {
             }
         });
     }
+
 }
