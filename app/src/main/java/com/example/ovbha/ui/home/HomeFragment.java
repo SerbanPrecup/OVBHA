@@ -16,6 +16,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.example.ovbha.MainActivity;
 import com.example.ovbha.R;
 import com.example.ovbha.SosActivity;
+import com.example.ovbha.WeatherActivity;
 import com.example.ovbha.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
@@ -23,6 +24,7 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     private Button btnShareLocation;
     private Button btnCheckList;
+    private Button btnWeather;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -32,12 +34,21 @@ public class HomeFragment extends Fragment {
         // Găsirea elementelor din XML
         btnShareLocation = root.findViewById(R.id.btnShareLocation);
         btnCheckList = root.findViewById(R.id.btnCheckList);
+        btnWeather = root.findViewById(R.id.btnWeather);
 
         // Setarea acțiunilor pentru butoane
         btnShareLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent =new Intent(requireContext(), SosActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnWeather.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(requireContext(), WeatherActivity.class);
                 startActivity(intent);
             }
         });
@@ -49,6 +60,7 @@ public class HomeFragment extends Fragment {
             }
 
         });
+
 
         return root;
     }
