@@ -13,7 +13,7 @@
 
     <item
         android:id="@+id/check_fragment"
-        android:icon="@drawable/maps"
+        android:icon="@drawable/checklist_icon"
         android:title="Checklist" />
 
 
