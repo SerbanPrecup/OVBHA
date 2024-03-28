@@ -44,7 +44,6 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        // Găsirea elementelor din XML
         imgMaps = root.findViewById(R.id.imgMaps);
         imgCheckList = root.findViewById(R.id.imgCheckList);
         imgWheater = root.findViewById(R.id.imgWeather);
@@ -53,7 +52,7 @@ public class HomeFragment extends Fragment {
         imgRestaurant = root.findViewById(R.id.imgRestaurant);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity());
 
-        // Setarea acțiunilor pentru butoane
+
         imgMaps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,9 +81,7 @@ public class HomeFragment extends Fragment {
         imgHotel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Obține locația utilizatorului
                 if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // Handle permission request if needed
                     return;
                 }
 
@@ -92,23 +89,18 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onSuccess(Location location) {
                         if (location != null) {
-                            // Obține coordonatele utilizatorului
+
                             double latitude = location.getLatitude();
                             double longitude = location.getLongitude();
 
-                            // Creează o Uri pentru a deschide Google Maps cu locația curentă și un filtru pentru hoteluri
                             Uri gmmIntentUri = Uri.parse("geo:" + latitude + "," + longitude + "?q=hotels");
 
-                            // Creează un obiect Intent pentru a deschide Google Maps
                             Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                            mapIntent.setPackage("com.google.android.apps.maps"); // Specifică că dorim să deschidem Google Maps
+                            mapIntent.setPackage("com.google.android.apps.maps");
 
-                            // Verifică dacă există o aplicație care să poată trata acest intent
                             if (mapIntent.resolveActivity(requireContext().getPackageManager()) != null) {
-                                // Dacă există, lansează intentul
                                 startActivity(mapIntent);
                             } else {
-                                // Dacă nu există o aplicație care să poată trata acest intent, afișează un mesaj de eroare
                                 Toast.makeText(requireContext(), "No application found to handle the request", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -120,39 +112,25 @@ public class HomeFragment extends Fragment {
         imgService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Obține locația utilizatorului
                 if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
                     return;
                 }
                 fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
                         if (location != null) {
-                            // Obține coordonatele utilizatorului
                             double latitude = location.getLatitude();
                             double longitude = location.getLongitude();
 
-                            // Creează o Uri pentru a deschide Google Maps cu locația curentă și un filtru pentru service-uri auto
                             Uri gmmIntentUri = Uri.parse("geo:" + latitude + "," + longitude + "?q=auto+service");
 
-                            // Creează un obiect Intent pentru a deschide Google Maps
                             Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                            mapIntent.setPackage("com.google.android.apps.maps"); // Specifică că dorim să deschidem Google Maps
+                            mapIntent.setPackage("com.google.android.apps.maps");
 
-                            // Verifică dacă există o aplicație care să poată trata acest intent
                             if (mapIntent.resolveActivity(requireContext().getPackageManager()) != null) {
 
-                                // Dacă există, lansează intentul
                                 startActivity(mapIntent);
                             } else {
-                                // Dacă nu există o aplicație care să poată trata acest intent, afișează un mesaj de eroare
                                 Toast.makeText(requireContext().getApplicationContext(), "No application found to handle the request", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -165,9 +143,7 @@ public class HomeFragment extends Fragment {
         imgRestaurant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Obține locația utilizatorului
                 if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // Handle permission request if needed
                     return;
                 }
 
@@ -175,23 +151,17 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onSuccess(Location location) {
                         if (location != null) {
-                            // Obține coordonatele utilizatorului
                             double latitude = location.getLatitude();
                             double longitude = location.getLongitude();
 
-                            // Creează o Uri pentru a deschide Google Maps cu locația curentă și un filtru pentru restaurante
                             Uri gmmIntentUri = Uri.parse("geo:" + latitude + "," + longitude + "?q=restaurants");
 
-                            // Creează un obiect Intent pentru a deschide Google Maps
                             Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                            mapIntent.setPackage("com.google.android.apps.maps"); // Specifică că dorim să deschidem Google Maps
+                            mapIntent.setPackage("com.google.android.apps.maps");
 
-                            // Verifică dacă există o aplicație care să poată trata acest intent
                             if (mapIntent.resolveActivity(requireContext().getPackageManager()) != null) {
-                                // Dacă există, lansează intentul
                                 startActivity(mapIntent);
                             } else {
-                                // Dacă nu există o aplicație care să poată trata acest intent, afișează un mesaj de eroare
                                 Toast.makeText(requireContext(), "No application found to handle the request", Toast.LENGTH_SHORT).show();
                             }
                         }

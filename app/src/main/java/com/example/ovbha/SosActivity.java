@@ -55,10 +55,8 @@ public class SosActivity extends AppCompatActivity {
         btnCall = findViewById(R.id.btnCall);
         btnSms = findViewById(R.id.btnSms);
         editText = findViewById(R.id.inNumber);
-        // Inițializare client de localizare
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
-        // Obține ultima locație cunoscută
         getLastLocation();
 
         btn112.setOnClickListener(new View.OnClickListener() {
@@ -92,13 +90,10 @@ public class SosActivity extends AppCompatActivity {
         btnSms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Verificăm dacă există permisiune pentru a trimite SMS
                 if (ActivityCompat.checkSelfPermission(SosActivity.this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
-                    // Dacă nu avem permisiune, o solicităm
                     int MY_PERMISSIONS_REQUEST_SEND_SMS = 456;
                     ActivityCompat.requestPermissions(SosActivity.this, new String[]{Manifest.permission.SEND_SMS}, MY_PERMISSIONS_REQUEST_SEND_SMS);
                 } else {
-                    // Dacă avem permisiune, trimitem SMS-ul
                     sendSms();
                 }
             }
@@ -112,10 +107,8 @@ public class SosActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == MY_PERMISSIONS_REQUEST_SEND_SMS) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permisiunea pentru trimiterea SMS-urilor a fost acordată, trimite SMS-ul
                 sendSms();
             } else {
-                // Permisiunea pentru trimiterea SMS-urilor a fost refuzată
                 Toast.makeText(this, "Permisiunea pentru trimiterea SMS-urilor a fost refuzată", Toast.LENGTH_SHORT).show();
             }
         }
@@ -125,16 +118,12 @@ public class SosActivity extends AppCompatActivity {
         String phoneNumber = editText.getText().toString();
         String message = "SOS! Emergency! Need immediate assistance!\nMy Location:\n" + textLoc + "\nLink: " + "https://www.google.com/maps/search/?api=1&query=" + String.valueOf(latitude) + "," + String.valueOf(longitude);
 
-        // Creăm un URI pentru compunerea unui mesaj SMS
         Uri uri = Uri.parse("smsto:" + phoneNumber);
 
-        // Creăm un Intent de tip ACTION_VIEW pentru deschiderea aplicației de mesagerie cu numărul și mesajul completat
         Intent smsIntent = new Intent(Intent.ACTION_VIEW, uri);
 
-        // Adăugăm mesajul SMS în corpul Intent-ului
         smsIntent.putExtra("sms_body", message);
 
-        // Verificăm dacă există o aplicație de mesagerie disponibilă pentru a trimite SMS
         if (smsIntent.resolveActivity(getPackageManager()) != null) {
             startActivity(smsIntent);
         } else {
@@ -148,11 +137,10 @@ public class SosActivity extends AppCompatActivity {
             List<Address> addresses = geocoder.getFromLocation(
                     location.getLatitude(),
                     location.getLongitude(),
-                    1); // Get only one address
+                    1);
 
             if (addresses != null && addresses.size() > 0) {
                 Address address = addresses.get(0);
-                // Format the address to display
                 String addressText = String.format(
                         "%s, %s, %s, %s, %s",
                         address.getFeatureName(),
@@ -162,7 +150,6 @@ public class SosActivity extends AppCompatActivity {
                         address.getCountryName());
 
                 return addressText;
-                // Use the addressText as needed
             } else {
                 Toast.makeText(this, "No address found for the location", Toast.LENGTH_SHORT).show();
             }
@@ -178,12 +165,10 @@ public class SosActivity extends AppCompatActivity {
     private void getLastLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // Dacă nu avem permisiunea, solicită-o
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
             return;
         }
 
-        // Obține locația curentă
         Task<Location> task = fusedLocationProviderClient.getLastLocation();
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override

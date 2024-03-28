@@ -136,7 +136,6 @@ public class WeatherActivity extends AppCompatActivity {
             if (addresses != null) {
                 Address address = addresses.get(0);
                 String addressString = address.getAddressLine(0);
-//                System.out.println(addressString);
                 String city = address.getLocality();
                 if (city != null && !city.equals("")) {
                     cityName2 = city;
@@ -206,7 +205,6 @@ public class WeatherActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // Handle errors
                         Log.e("Volley Error", "Error occurred: " + error.getMessage());
                     }
                 });

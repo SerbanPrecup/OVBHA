@@ -74,7 +74,6 @@ public class MapsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_maps, container, false);
 
-        // Inițializează serviciul Places API
         if (!Places.isInitialized()) {
             Places.initialize(requireContext(), "AIzaSyBQTY0sOKHIZ8yYjy2eTij64uSwq8SaVhs");
         }
@@ -105,38 +104,33 @@ public class MapsFragment extends Fragment {
             }
     );
 
-    private void searchHotels() {
-        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // Dacă permisiunea pentru localizare nu este acordată, nu puteți căuta hoteluri. Poate ar trebui să solicitați permisiunea aici.
-            return;
-        }
-
-        // Înlocuiți latitudinea și longitudinea cu coordonatele actuale sau coordonatele dorite ale centrului zonei de căutare.
-        LatLng searchLocation = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-
-        // Definiți cererea de căutare a hotelurilor folosind Google Places API.
-        PlacesClient placesClient = Places.createClient(requireContext());
-        List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
-        FindCurrentPlaceRequest request = FindCurrentPlaceRequest.newInstance(placeFields);
-
-        // Trimiteți cererea de căutare a locurilor și tratați rezultatele.
-        placesClient.findCurrentPlace(request).addOnSuccessListener((response) -> {
-            for (PlaceLikelihood placeLikelihood : response.getPlaceLikelihoods()) {
-                if (placeLikelihood.getPlace().getTypes().contains(Place.Type.LODGING)) {
-                    LatLng hotelLatLng = placeLikelihood.getPlace().getLatLng();
-                    if (hotelLatLng != null) {
-                        Marker marker = googleMap.addMarker(new MarkerOptions()
-                                .position(hotelLatLng)
-                                .title(placeLikelihood.getPlace().getName()));
-                        hotelMarkers.add(marker);
-                    }
-                }
-            }
-        }).addOnFailureListener((exception) -> {
-            // Tratați cazul în care căutarea hotelurilor a eșuat.
-            Toast.makeText(requireContext(), "Failed to search for hotels.", Toast.LENGTH_SHORT).show();
-        });
-    }
+//    private void searchHotels() {
+//        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            return;
+//        }
+//
+//        LatLng searchLocation = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+//
+//        PlacesClient placesClient = Places.createClient(requireContext());
+//        List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
+//        FindCurrentPlaceRequest request = FindCurrentPlaceRequest.newInstance(placeFields);
+//
+//        placesClient.findCurrentPlace(request).addOnSuccessListener((response) -> {
+//            for (PlaceLikelihood placeLikelihood : response.getPlaceLikelihoods()) {
+//                if (placeLikelihood.getPlace().getTypes().contains(Place.Type.LODGING)) {
+//                    LatLng hotelLatLng = placeLikelihood.getPlace().getLatLng();
+//                    if (hotelLatLng != null) {
+//                        Marker marker = googleMap.addMarker(new MarkerOptions()
+//                                .position(hotelLatLng)
+//                                .title(placeLikelihood.getPlace().getName()));
+//                        hotelMarkers.add(marker);
+//                    }
+//                }
+//            }
+//        }).addOnFailureListener((exception) -> {
+//            Toast.makeText(requireContext(), "Failed to search for hotels.", Toast.LENGTH_SHORT).show();
+//        });
+//    }
 
     private void getLastLocation() {
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED

@@ -30,9 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         btnSos = findViewById(R.id.btnSOS);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-            // Set OnClickListener
+
         btnSos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
